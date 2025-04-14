@@ -29,7 +29,7 @@ class Tracker:
 
         tracks = {
             "players":[],
-            "referees":[],
+            "referee":[],
             "ball":[]
         }
 
@@ -62,7 +62,7 @@ class Tracker:
                 if cls_id == class_names_inv["referee"]:
                     tracks["referee"][frame_num][track_id] = {"bound_box":bound_box}
 
-            for i in range(len(detection_supervision.xyxy)):
+            for frame_detection in detection_supervision:
                 bound_box = frame_detection[0].tolist()
                 cls_id = frame_detection[3]
 
