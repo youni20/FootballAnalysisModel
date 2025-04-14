@@ -15,7 +15,6 @@ class Tracker:
         for i in range(0 ,len(frames), batch_size):
             detections_batch = self.model.predict(frames[i: i+batch_size], conf=0.1)
             detections = detections + detections_batch
-            break
         return detections       
 
     
@@ -49,7 +48,7 @@ class Tracker:
             # Tracking Objects
             detections_with_tracks = self.tracker.update_with_detections(detection_supervision)
             tracks["players"].append({})
-            tracks["referees"].append({})
+            tracks["referee"].append({})
             tracks["ball"].append({})
 
             for frame_detection in detections_with_tracks:
@@ -57,13 +56,13 @@ class Tracker:
                 cls_id = frame_detection[3]
                 track_id = frame_detection[4]
 
-                if class_id == class_names_inv["player"]:
+                if cls_id == class_names_inv["player"]:
                     tracks["players"][frame_num][track_id] = {"bound_box":bound_box}
 
-                if class_id == class_names_inv["referee"]:
+                if cls_id == class_names_inv["referee"]:
                     tracks["referee"][frame_num][track_id] = {"bound_box":bound_box}
 
-            for frame_detection in detection_supervision:
+            for i in range(len(detection_supervision.xyxy)):
                 bound_box = frame_detection[0].tolist()
                 cls_id = frame_detection[3]
 
