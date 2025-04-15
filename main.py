@@ -12,7 +12,7 @@ import traceback
 
 def main():
     try:
-        video_path = 'input_videos/espvspor.mp4'
+        video_path = 'input_videos/testmatch.mp4'
         if not os.path.exists(video_path):
             print(f"Video file not found: {video_path}")
             return
@@ -69,6 +69,11 @@ def main():
                                     tracks['players'][0])
         
         for frame_num, player_track in enumerate(tracks['players']):
+            # Skip if we don't have a corresponding video frame
+            if frame_num >= len(video_frames):
+                print(f"Warning: Skipping frame {frame_num} - no corresponding video frame")
+                continue
+                
             for player_id, track in player_track.items():
                 team = team_assigner.get_player_team(video_frames[frame_num],   
                                                  track['bbox'],
@@ -81,6 +86,11 @@ def main():
         player_assigner = PlayerBallAssigner()
         team_ball_control = []
         for frame_num, player_track in enumerate(tracks['players']):
+            # Skip if we don't have a corresponding video frame
+            if frame_num >= len(video_frames):
+                print(f"Warning: Skipping frame {frame_num} - no corresponding video frame")
+                continue
+                
             if frame_num < len(tracks['ball']) and 1 in tracks['ball'][frame_num]:
                 ball_bbox = tracks['ball'][frame_num][1]['bbox']
                 assigned_player = player_assigner.assign_ball_to_player(player_track, ball_bbox)
