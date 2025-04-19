@@ -1,0 +1,2 @@
+d52ceef6025faed34ac6b4332ab612f535a9430e 13030 football_training_yolo_v5.ipynb
+dd8fa8cc73d5bcff47deb7b469d76017c1df80b1 13652 football_training_yolo_v5.ipynb
